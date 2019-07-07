@@ -1,4 +1,4 @@
-<h1>Create a new a project</h1>
+<h1>Edit your project</h1>
 
 <% if @project.errors.any? %>
     <ul>
@@ -8,7 +8,7 @@
     </ul>
 <% end %>
 
-<%= form_with model: @project, local:true do |form| %>
+<%= form_with model: @project, local: true do |form| %>
     <div>
         <%= form.label :title%>
         <%= form.text_field :title, placeholder: "title" %>
