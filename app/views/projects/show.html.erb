@@ -3,3 +3,20 @@
 <small><%= time_ago_in_words(@project.updated_at)%></small>
 <%= link_to "Delete", project_path(@project.id), method: :delete, data: {confirm: "Are you sure you want to delete the project?"}%>
 <%= link_to "Edit", edit_project_path %>
+<br>
+<h1>Tasks</h1>
+<%= form_with model:[@project, @task], local: true do |form| %>
+    <div>
+        <%= form.label "Tasks", :title %>
+        <%= form.text_field "Tasks", :title %>
+    </div>
+    <div>
+        <%= form.label "Description", :description %>
+        <%= form.text_area "Description", :description %>
+    </div>
+    <div>
+        <%= form.label "Tasks", :title %>
+        <%= form.text_field "Tasks", :title %>
+    </div>
+    <%= form.submit%>
+<% end %>

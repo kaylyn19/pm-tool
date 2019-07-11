@@ -5,4 +5,8 @@ Rails.application.routes.draw do
   get '/about', {to: 'home#about'}
 
   resources :projects
+
+  resources :projects do
+    resources :tasks 
+  end
 end

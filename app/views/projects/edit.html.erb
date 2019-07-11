@@ -1,11 +1,7 @@
 <h1>Edit your project</h1>
 
 <% if @project.errors.any? %>
-    <ul>
-        <% @project.errors.full_messages.each do |msg| %>
-            <li><%= msg %><li>
-        <% end %>
-    </ul>
+    <p><%= @project.errors.full_messages.join(',') %></p>
 <% end %>
 
 <%= form_with model: @project, local: true do |form| %>
