@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :projects do
     resources :tasks 
   end
+
+  patch '/projects/:project_id/tasks/:id/complete', {to: 'tasks#complete', as: 'task_complete'}
 end

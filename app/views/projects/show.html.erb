@@ -7,16 +7,31 @@
 <h1>Tasks</h1>
 <%= form_with model:[@project, @task], local: true do |form| %>
     <div>
-        <%= form.label "Tasks", :title %>
-        <%= form.text_field "Tasks", :title %>
+        <%= form.label :title %>
+        <%= form.text_field :title %>
     </div>
     <div>
-        <%= form.label "Description", :description %>
-        <%= form.text_area "Description", :description %>
+        <%= form.label :description %>
+        <%= form.text_area :description %>
     </div>
     <div>
-        <%= form.label "Tasks", :title %>
-        <%= form.text_field "Tasks", :title %>
+        <%= form.label :due_date %>
+        <%= form.text_area :due_date, placeholder: "2019-07-04" %>
     </div>
     <%= form.submit%>
+<% end %>
+
+<% @tasks.each do |task| %>
+    <p>
+    <%= task.title%>
+    <%= task.description%>
+    <%= task.due_date%>
+    <small><%= time_ago_in_words(task.updated_at)%></small>
+    <% if task.complete == false%>
+        <small><%= link_to "Mark Completed", task_complete_path(task.project_id, task.id), method: :patch %></small>
+    <% else %>
+        <small><%= link_to "Mark Incomplete", task_complete_path(task.project_id, task.id), method: :patch %></small>
+    <% end %>
+    <small><%= link_to "Delete", project_task_path(task.id), method: :delete, data: {confirm: "Are you sure you want to delete the task"}%></small>
+    </p>
 <% end %>
