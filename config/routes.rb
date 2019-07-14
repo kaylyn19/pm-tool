@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   patch '/projects/:project_id/tasks/:id/complete', {to: 'tasks#complete', as: 'task_complete'}
 
   resources :users, only: [:new, :create]
+  resource :sessions, only: [:new, :create, :destroy]
 end
