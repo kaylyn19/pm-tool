@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  get 'users/new'
+  get 'users/create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/', {to: 'home#index', as: 'root'}
@@ -15,6 +18,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-
   patch '/projects/:project_id/tasks/:id/complete', {to: 'tasks#complete', as: 'task_complete'}
+
+  resources :users, only: [:new, :create]
 end
