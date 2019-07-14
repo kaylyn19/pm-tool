@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
         project_params = params.require(:project).permit(:title, :description, :due_date)
         @project = Project.new project_params
         if @project.save
-            redirect_to project_path(@project.id), notice: "Saved!"
+            redirect_to project_path(@project), notice: "Saved!"
         else
             flash[:notice] = "error"
             render :new
@@ -17,8 +17,11 @@ class ProjectsController < ApplicationController
     def show
         @project = Project.find params[:id]
         @task = Task.new
-        @tasks = @project.tasks.all
-        
+        @tasks = @project.tasks.order(created_at: :desc)
+        @discussion = Discussion.new
+        @discussions = @project.discussions.order(created_at: :desc)
+        @comment = Comment.new
+        @comments = @discussion.comments.order(created_at: :desc)
     end
 
     def index

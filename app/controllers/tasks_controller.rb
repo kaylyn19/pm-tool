@@ -6,11 +6,13 @@ class TasksController < ApplicationController
         @project = Project.find params[:project_id]
         @task.project = @project
         if @task.save
-            redirect_to project_task_path(@project, @task)
+            redirect_to project_path(@project)
         else
-            render 'projects/new'
+            @tasks = @project.tasks.order(created_at: :desc)
+            render 'projects/show', alert: "Unable to save the task"
         end
     end
+
 
     def destroy
         @task = Task.find params[:id]

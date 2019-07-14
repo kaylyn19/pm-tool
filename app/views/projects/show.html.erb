@@ -2,10 +2,16 @@
 <p><%= @project.description%></p>
 <small><%= time_ago_in_words(@project.updated_at)%></small>
 <%= link_to "Delete", project_path(@project.id), method: :delete, data: {confirm: "Are you sure you want to delete the project?"}%>
-<%= link_to "Edit", edit_project_path %>
+<%= link_to "Edit", edit_project_path(@project) %>
 <br>
+<%= link_to "Post a discussion on this project", new_project_discussion_path(@project)%>
+<br>
+
 <h1>Tasks</h1>
 <%= form_with model:[@project, @task], local: true do |form| %>
+    <% if @task.errors.any? %>
+        <p><%= @task.errors.full_messages.join(",")%></p>
+    <% end %>
     <div>
         <%= form.label :title %>
         <%= form.text_field :title %>
@@ -16,22 +22,39 @@
     </div>
     <div>
         <%= form.label :due_date %>
-        <%= form.text_area :due_date, placeholder: "2019-07-04" %>
+        <%= form.text_field :due_date, placeholder: "2019-07-04" %>
     </div>
     <%= form.submit%>
 <% end %>
 
 <% @tasks.each do |task| %>
     <p>
-    <%= task.title%>
-    <%= task.description%>
-    <%= task.due_date%>
-    <small><%= time_ago_in_words(task.updated_at)%></small>
-    <% if task.complete == false%>
-        <small><%= link_to "Mark Completed", task_complete_path(task.project_id, task.id), method: :patch %></small>
-    <% else %>
-        <small><%= link_to "Mark Incomplete", task_complete_path(task.project_id, task.id), method: :patch %></small>
-    <% end %>
-    <small><%= link_to "Delete", project_task_path(task.id), method: :delete, data: {confirm: "Are you sure you want to delete the task"}%></small>
+        <%= task.title%>
+        <%= task.description%>
+        <%= task.due_date%>
+        <small><%= time_ago_in_words(task.updated_at)%></small>
+        <% if task.complete == false%>
+            <small><%= link_to "Mark Completed", task_complete_path(task.project_id, task.id), method: :patch %></small>
+        <% else %>
+            <small><%= link_to "Mark Incomplete", task_complete_path(task.project_id, task.id), method: :patch %></small>
+        <% end %>
+        <small><%= link_to "Delete", project_task_path(@project, task.id), method: :delete, data: {confirm: "Are you sure you want to delete the task"}%></small>
     </p>
+<% end %>
+
+<h1>List of Discussions</h1>
+<% if @discussion.present? %>
+    <% @discussions.each do |discussion| %>
+        <h3><%= discussion.title %></h3>
+        <p><%= discussion.description %></p>
+        <small><%= time_ago_in_words(discussion.updated_at) %></small> |
+        <small><%= link_to "Delete", project_discussion_path(discussion.project_id, discussion.id), method: :delete, data: {confirm: "Are you sure you want to delete the post?"} %></small>
+
+        <% @comments.each do |comment| %>
+            <p><%= comment.body%></p>
+            <small><%= time_ago_in_words(comment.updated_at) %></small>
+            <small><%= link_to "Delete", ,method: :delete, data: {confirm: "Are you sure you want to delete your comment?" %></small>
+            <small><%= link_to "edit, %></small>
+        <% end %>        
+    <% end %>
 <% end %>

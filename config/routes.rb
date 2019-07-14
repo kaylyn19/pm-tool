@@ -7,8 +7,14 @@ Rails.application.routes.draw do
   resources :projects
 
   resources :projects do
-    resources :tasks 
+    resources :tasks
+    resources :discussions
   end
+
+  resources :discussions do
+    resources :comments
+  end
+
 
   patch '/projects/:project_id/tasks/:id/complete', {to: 'tasks#complete', as: 'task_complete'}
 end
