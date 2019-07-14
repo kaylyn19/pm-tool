@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
     belongs_to :project
+    belongs_to :user
+
     validates :title, presence: true, uniqueness: {scope: :project, message: "no same task per project"}
 
     # before_validation :newer_published_at

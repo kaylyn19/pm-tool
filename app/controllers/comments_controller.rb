@@ -1,11 +1,14 @@
 class CommentsController < ApplicationController
     before_action :find_id, except: [:create]
     before_action :authenticate!
+    before_action :authorize, only: [:destroy, :edit, :update]
+
 
     def create
         @discussion = Discussion.find params[:discussion_id]
         @comment = Comment.new comment_params
         @comment.discussion = @discussion
+        @comment.user = current_user
         if @comment.save
             redirect_to @discussion, notice: "Commented on the discussion!"
         else
@@ -45,5 +48,9 @@ class CommentsController < ApplicationController
 
     def find_id
         @comment = Comment.find params[:id]
+    end
+
+    def authorize
+        redirect_to root_path, alert: 'Not authorized' unless can?(:crud, @comment)
     end
 end

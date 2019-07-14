@@ -1,10 +1,14 @@
 class TasksController < ApplicationController
     before_action :find_task_id, except: [:create]
     before_action :authenticate!
+    before_action :authorize, only: [:destroy, :complete]
+
     def create
         task_params = params.require(:task).permit(:title, :description, :complete)
         @task = Task.new task_params
         @project = Project.find params[:project_id]
+        @task.user = current_user
+
         @task.project = @project
         if @task.save
             redirect_to project_path(@project)
@@ -35,5 +39,9 @@ class TasksController < ApplicationController
     
     def find_task_id
         @task = Task.find params[:id]
+    end
+
+    def authorize
+        redirect_to root_path, alert: 'Not authorized' unless can?(:crud, @task)
     end
 end

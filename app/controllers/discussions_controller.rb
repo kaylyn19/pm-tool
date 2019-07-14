@@ -1,6 +1,8 @@
 class DiscussionsController < ApplicationController
     before_action :find_id, except: [:new, :create]
     before_action :authenticate!, except: [:show]
+    before_action :authorize, only: [:destroy, :edit, :update]
+
     def new
         # @project = Project.find params[:project_id]
         @discussion = Discussion.new
@@ -9,11 +11,11 @@ class DiscussionsController < ApplicationController
     def create
         @project = Project.find params[:project_id]
         @discussion = Discussion.new discussion_params
-        @discussion.project = @project
+        @discussion.user = current_user
         if @discussion.save
-            redirect_to project_path(@project)
+            redirect_to project_path(@discussion.project_id)
         else
-            @discussions = @project.discussions.order(created_at: :desc)
+            # @discussions = @project.discussions.order(created_at: :desc)
             render :new
         end
     end
@@ -54,5 +56,9 @@ class DiscussionsController < ApplicationController
 
     def find_id
         @discussion = Discussion.find params[:id]
+    end
+
+    def authorize
+        redirect_to root_path, alert: 'Not authorized' unless can?(:crud, @discussion)
     end
 end
