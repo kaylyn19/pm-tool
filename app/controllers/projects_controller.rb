@@ -1,4 +1,7 @@
 class ProjectsController < ApplicationController
+    before_action :find_id, only: [:show, :destroy, :edit, :update]
+    before_action :authenticate!, except: [:show, :index]
+    
     def new
         @project = Project.new # Idon't think this is needed here
     end
@@ -15,7 +18,7 @@ class ProjectsController < ApplicationController
     end
 
     def show
-        @project = Project.find params[:id]
+        # @project = Project.find params[:id]
         @task = Task.new
         @tasks = @project.tasks.order(created_at: :desc)
         @discussions = @project.discussions.order(created_at: :desc)
@@ -26,22 +29,28 @@ class ProjectsController < ApplicationController
     end
 
     def destroy
-        @project = Project.find params[:id]
+        # @project = Project.find params[:id]
         @project.destroy
         redirect_to projects_path
     end
 
     def edit
-        @project = Project.find params[:id]
+        # @project = Project.find params[:id]
     end
 
     def update
         project_params = params.require(:project).permit(:title, :description, :due_date)
-        @project = Project.find params[:id]
+        # @project = Project.find params[:id]
         if @project.update project_params
             redirect_to project_path(@project), notice: 'updated!'
         else
             render :edit
         end
+    end
+
+    private
+
+    def find_id
+        @project = Project.find params[:id]
     end
 end

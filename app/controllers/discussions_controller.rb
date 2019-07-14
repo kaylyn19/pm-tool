@@ -1,6 +1,8 @@
 class DiscussionsController < ApplicationController
+    before_action :find_id, except: [:create]
+    before_action :authenticate!, except: [:show]
     def new
-        @project = Project.find params[:project_id]
+        # @project = Project.find params[:project_id]
         @discussion = Discussion.new
     end
 
@@ -17,13 +19,13 @@ class DiscussionsController < ApplicationController
     end
 
     def show
-        @discussion = Discussion.find params[:id]
+        # @discussion = Discussion.find params[:id]
         @comment = Comment.new
         @comments = @discussion.comments.order(created_at: :desc)
     end
 
     def destroy
-        @discussion = Discussion.find params[:id]
+        # @discussion = Discussion.find params[:id]
         if @discussion.destroy
             redirect_to project_path(@discussion.project_id), notice: "Discussion successfully deleted!"
         else
@@ -32,11 +34,11 @@ class DiscussionsController < ApplicationController
     end
 
     def edit
-        @discussion = Discussion.find params[:id]
+        # @discussion = Discussion.find params[:id]
     end
 
     def update
-        @discussion = Discussion.find params[:id]
+        # @discussion = Discussion.find params[:id]
         if @discussion.update discussion_params
             redirect_to project_path(@discussion.project_id), notice: "Discussion updated"
         else

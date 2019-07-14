@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
     helper_method :user_signed_in?
 
     def authenticate!
-        if !user_signed_in?
-            redirect_to new_sessions_path, alert: "Please sign in first"
-        end
+        redirect_to new_sessions_path, alert: "Please sign in first" unless user_signed_in?
     end
 end

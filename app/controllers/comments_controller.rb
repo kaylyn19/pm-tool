@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+    before_action :find_id, except: [:create]
+    before_action :authenticate!
+
     def create
         @discussion = Discussion.find params[:discussion_id]
         @comment = Comment.new comment_params
@@ -12,7 +15,7 @@ class CommentsController < ApplicationController
     end
 
     def destroy
-        @comment = Comment.find params[:id]
+        # @comment = Comment.find params[:id]
         if @comment.destroy
             redirect_to discussion_path(@comment.discussion_id), notice: 'Comment successfully deleted!'
         else
@@ -21,12 +24,12 @@ class CommentsController < ApplicationController
     end
 
     def edit
-        @comment = Comment.find params[:id]
+        # @comment = Comment.find params[:id]
         @discussion = Discussion.find params[:discussion_id]
     end
 
     def update
-        @comment = Comment.find params[:id]
+        # @comment = Comment.find params[:id]
         if @comment.update comment_params
             redirect_to discussion_path(@comment.discussion_id)
         else

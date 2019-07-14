@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
-    # before_action :find_task_id
+    before_action :find_task_id, except: [:create]
+    before_action :authenticate!
     def create
         task_params = params.require(:task).permit(:title, :description, :complete)
         @task = Task.new task_params
@@ -15,13 +16,13 @@ class TasksController < ApplicationController
 
 
     def destroy
-        @task = Task.find params[:id]
+        # @task = Task.find params[:id]
         @task.destroy
         redirect_to project_path(@task.project_id)        
     end
 
     def complete
-        @task = Task.find params[:id]
+        # @task = Task.find params[:id]
         if @task.complete == false
             @task.update(complete: true)
         else
@@ -33,6 +34,6 @@ class TasksController < ApplicationController
     private
     
     def find_task_id
-        # @task = Task.find params[:id]
+        @task = Task.find params[:id]
     end
 end
