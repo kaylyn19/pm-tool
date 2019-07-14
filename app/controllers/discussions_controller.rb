@@ -6,7 +6,6 @@ class DiscussionsController < ApplicationController
 
     def create
         @project = Project.find params[:project_id]
-        # @task = Task.find params[:id]
         @discussion = Discussion.new discussion_params
         @discussion.project = @project
         if @discussion.save
@@ -15,6 +14,12 @@ class DiscussionsController < ApplicationController
             @discussions = @project.discussions.order(created_at: :desc)
             render :new
         end
+    end
+
+    def show
+        @discussion = Discussion.find params[:id]
+        @comment = Comment.new
+        @comments = @discussion.comments.order(created_at: :desc)
     end
 
     def destroy
@@ -27,6 +32,7 @@ class DiscussionsController < ApplicationController
     end
 
     def edit
+        @discussion = Discussion.find params[:id]
     end
 
     def update

@@ -1,0 +1,17 @@
+
+<h1>Edit</h1>
+<%= form_with model: [@discussion], local: true do |form| %>
+    <% if @discussion.errors.any? %>
+        <p>Try again!</p>
+        <p><%= @discussion.errors.full_messages.join(',')%></p>
+    <% end %>
+    <div>
+        <%= form.label :title%>
+        <%= form.text_field :title%>
+    </div>
+    <div>
+        <%= form.label :description%>
+        <%= form.text_field :description%>
+    </div>
+    <%= form.submit%>
+<% end %>

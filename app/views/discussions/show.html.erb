@@ -1,0 +1,20 @@
+<h1><%=@discussion.title%></h1>
+<p><%=@discussion.description%></p>
+<small><%= time_ago_in_words(@discussion.updated_at) %></small>
+<small><%= link_to "Delete", project_discussion_path(@discussion.project_id, @discussion), method: :delete, data: {confirm: "Are you sure you want to delete your comment?"} %></small>
+<small><%= link_to "Edit", edit_project_discussion_path(@discussion.project_id, @discussion) %></small>
+
+<%= form_with model: [@discussion, @comment], local: true do |form| %>
+    <div>
+        <%= form.label :body%>
+        <%= form.text_area :body%>
+    </div>
+    <%= form.submit %>
+<% end %>        
+
+<% @comments.each do |comment| %>
+    <p><%= comment.body%></p>
+    <small><%= time_ago_in_words(comment.updated_at) %></small>
+    <small><%= link_to "Delete", discussion_comment_path(comment.discussion_id, comment), method: :delete, data: {confirm: "Are you sure you want to delete your comment?"} %></small>
+    <small><%= link_to "Edit", edit_discussion_comment_path(comment.discussion_id, comment)%></small>
+<% end %>        

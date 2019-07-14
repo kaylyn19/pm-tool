@@ -20,8 +20,8 @@ class ProjectsController < ApplicationController
         @tasks = @project.tasks.order(created_at: :desc)
         @discussion = Discussion.new
         @discussions = @project.discussions.order(created_at: :desc)
-        @comment = Comment.new
-        @comments = @discussion.comments.order(created_at: :desc)
+        # @comment = Comment.new
+        # @comments = @discussion.comments.order(created_at: :desc)
     end
 
     def index
