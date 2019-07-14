@@ -12,17 +12,35 @@ class CommentsController < ApplicationController
     end
 
     def destroy
+        @comment = Comment.find params[:id]
+        if @comment.destroy
+            redirect_to discussion_path(@comment.discussion_id), notice: 'Comment successfully deleted!'
+        else
+            render :edit
+        end
     end
 
     def edit
+        @comment = Comment.find params[:id]
+        @discussion = Discussion.find params[:discussion_id]
     end
 
     def update
+        @comment = Comment.find params[:id]
+        if @comment.update comment_params
+            redirect_to discussion_path(@comment.discussion_id)
+        else
+            render :edit
+        end
     end
 
     private
 
     def comment_params
         params.require(:comment).permit(:body)
+    end
+
+    def find_id
+        @comment = Comment.find params[:id]
     end
 end

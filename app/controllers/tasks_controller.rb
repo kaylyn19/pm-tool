@@ -27,6 +27,7 @@ class TasksController < ApplicationController
         else
             @task.update(complete: false)
         end
+        redirect_to project_path(@task.project_id)
     end
 
     private
