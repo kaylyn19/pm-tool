@@ -18,6 +18,15 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+
+  # post '/discussions/:discussion_id/comments', {to: 'comments#create', as: :discussion_comments}
+  # get '/discussions/:discussion_id/comments/:id', {to: 'comments#show', as: :discussion_comment}
+  # delete '/discussions/:discussion_id/comments/:id', {to: 'comments#destroy'}
+  # get '/discussions/:discussion_id/comments/:id/edit', {to: 'comments#edit', as: :edit_discussion_comment}
+  # patch '/discussions/:discussion_id/comments/:id', {to: 'comments#update'}
+
+
+  
   patch '/projects/:project_id/tasks/:id/complete', {to: 'tasks#complete', as: 'task_complete'}
 
   resources :users, only: [:new, :create, :edit, :update]

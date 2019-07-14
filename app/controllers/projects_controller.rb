@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
         if @project.save
             redirect_to project_path(@project), notice: "Saved!"
         else
-            flash[:notice] = "error"
+            flash[:alert] = "error"
             render :new
         end
     end

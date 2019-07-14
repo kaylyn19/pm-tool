@@ -4,13 +4,13 @@ class DiscussionsController < ApplicationController
     before_action :authorize, only: [:destroy, :edit, :update]
 
     def new
-        # @project = Project.find params[:project_id]
         @discussion = Discussion.new
     end
 
     def create
         @project = Project.find params[:project_id]
         @discussion = Discussion.new discussion_params
+        @discussion.project = @project
         @discussion.user = current_user
         if @discussion.save
             redirect_to project_path(@discussion.project_id)
@@ -22,6 +22,7 @@ class DiscussionsController < ApplicationController
 
     def show
         # @discussion = Discussion.find params[:id]
+        # @project = Project.find params[:project_id]
         @comment = Comment.new
         @comments = @discussion.comments.order(created_at: :desc)
     end

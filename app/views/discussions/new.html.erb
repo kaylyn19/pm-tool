@@ -1,6 +1,6 @@
 
 <h1>Discussion</h1>
-<%= form_with model: @discussion, local: true do |form| %>
+<%= form_with model: [@project, @discussion], local: true do |form| %>
     <% if @discussion.errors.any? %>
         <p>Try again!</p>
         <p><%= @discussion.errors.full_messages.join(',')%></p>
