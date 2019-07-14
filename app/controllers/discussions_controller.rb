@@ -36,11 +36,21 @@ class DiscussionsController < ApplicationController
     end
 
     def update
+        @discussion = Discussion.find params[:id]
+        if @discussion.update discussion_params
+            redirect_to project_path(@discussion.project_id), notice: "Discussion updated"
+        else
+            render :edit, alert: "Unable to update. Try again!"
+        end
     end
 
     private
 
     def discussion_params
         params.require(:discussion).permit(:title, :description)
+    end
+
+    def find_id
+        @discussion = Discussion.find params[:id]
     end
 end
