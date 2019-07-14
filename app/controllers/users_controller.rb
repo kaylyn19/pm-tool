@@ -14,6 +14,31 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update params.require(:user).permit(:first_name, :last_name)
+      redirect_to root_path, notice: "Profile Updated"
+    else
+      render :edit
+    end
+  end
+
+  def edit_password
+    @user = current_user
+  end
+
+  def update_password
+    @user = current_user
+    if @user.update params.require(:user).permit(:password, :password_confirmation)
+      redirect_to root_path, notice: "Password Updated"
+    else
+      render :edit
+    end
+  end
   private
 
   def user_params

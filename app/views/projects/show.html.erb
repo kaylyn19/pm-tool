@@ -4,7 +4,7 @@
 <%= link_to "Delete", project_path(@project.id), method: :delete, data: {confirm: "Are you sure you want to delete the project?"}%>
 <%= link_to "Edit", edit_project_path(@project) %>
 <br>
-<%= link_to "Post a discussion on this project", new_project_discussion_path(@project)%>
+<%= link_to "Post a discussion on this project", new_discussion_path%>
 <br>
 
 <h1>Tasks</h1>

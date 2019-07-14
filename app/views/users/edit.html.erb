@@ -1,0 +1,24 @@
+<h1>Change User Profile</h1>
+
+<% if @user.errors.any? %>
+    <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg%></li>
+        <% end %>
+    </ul>
+<% end %>
+<%= form_with model: @user, local: true do |f| %>
+    <div>
+        <%= f.label :first_name%>
+        <%= f.text_field :first_name%>
+    </div>
+    <div>
+        <%= f.label :last_name%>
+        <%= f.text_field :last_name%>
+    </div>
+    <div>
+        <%= f.label :email%>
+        <%= f.email_field :email, readonly: true%>
+    </div>
+    <%= f.submit "Update Profile" %>
+<% end %>

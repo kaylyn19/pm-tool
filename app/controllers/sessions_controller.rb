@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email params[:email]
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to projects_path, notice: "Signed In"
+      redirect_to projects_path
     else
       render :new, alert: "Sign In Failed. Try again!"
     end

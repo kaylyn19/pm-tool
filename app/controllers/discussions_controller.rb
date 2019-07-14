@@ -1,5 +1,5 @@
 class DiscussionsController < ApplicationController
-    before_action :find_id, except: [:create]
+    before_action :find_id, except: [:new, :create]
     before_action :authenticate!, except: [:show]
     def new
         # @project = Project.find params[:project_id]
