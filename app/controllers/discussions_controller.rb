@@ -4,6 +4,7 @@ class DiscussionsController < ApplicationController
     before_action :authorize, only: [:destroy, :edit, :update]
 
     def new
+        @project = Project.find params[:project_id]
         @discussion = Discussion.new
     end
 

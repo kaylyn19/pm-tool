@@ -4,13 +4,11 @@ class Task < ApplicationRecord
 
     validates :title, presence: true, uniqueness: {scope: :project, message: "no same task per project"}
     validates :description, presence: true
-    # before_validation :newer_published_at
+    after_save :newer_due_date
+    private
 
-    # private
-
-    # def newer_published_at
-    #     return unless due_date.present?
-    #     self.errors.add(:due_date, "due date comes after created at") unless due_date > created_at || due_date > Project.due_date
-    # end
-
+    def newer_due_date
+        return unless due_date.present?
+        self.errors.add(:due_date, "due date comes after created at") unless due_date > created_at && due_date > Project.due_date
+    end
 end
