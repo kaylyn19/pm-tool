@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_14_064700) do
+ActiveRecord::Schema.define(version: 2019_07_17_033958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 2019_07_14_064700) do
     t.bigint "user_id"
     t.index ["project_id"], name: "index_discussions_on_project_id"
     t.index ["user_id"], name: "index_discussions_on_user_id"
+  end
+
+  create_table "favourites", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_favourites_on_project_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -73,6 +82,8 @@ ActiveRecord::Schema.define(version: 2019_07_14_064700) do
   add_foreign_key "comments", "users"
   add_foreign_key "discussions", "projects"
   add_foreign_key "discussions", "users"
+  add_foreign_key "favourites", "projects"
+  add_foreign_key "favourites", "users"
   add_foreign_key "projects", "users"
   add_foreign_key "tasks", "users"
 end

@@ -47,5 +47,8 @@ class Ability
       comment.user == user
     end
 
+    can :favourite, Project do |project|
+      user.present? && project.user != user
+    end
   end
 end
