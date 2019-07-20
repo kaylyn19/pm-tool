@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
+    has_secure_token :reset_password_token
     has_many :projects, dependent: :destroy
     has_many :tasks, dependent: :destroy
     has_many :discussions, dependent: :destroy
@@ -14,5 +15,9 @@ class User < ApplicationRecord
     validates :email, presence: true, uniqueness: true, format: VALID_EMAIL_REGEX
     def full_name
         "#{first_name} #{last_name}"
+    end
+
+    def generate_password_token!
+        self.reset_password_token
     end
 end

@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
     before_action :authorize, only: [:destroy, :edit, :update]
 
     def new
-        @project = Project.new # Idon't think this is needed here
+        @project = Project.new 
     end
 
     def create

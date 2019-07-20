@@ -1,6 +1,7 @@
 class FavouritesController < ApplicationController
     before_action :project_params
     before_action :authenticate!
+    before_action :authorize!
 
     def create
         # @project = Project.find params[:project_id]
@@ -28,5 +29,9 @@ class FavouritesController < ApplicationController
 
     def project_params
         @project = Project.find params[:project_id]
+    end
+
+    def authorize!
+        redirect_to projects_path, alert: "You can favourite/unfavourite your project!" unless can? :favourite, @project
     end
 end

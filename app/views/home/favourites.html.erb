@@ -1,0 +1,7 @@
+
+<% current_user.favourite_projects.each do |project|%>
+    <h1><%= project.title%></h1>
+    <p>Due <%= project.description%></p>
+    <p>Due <%= project.due_date%></p>
+    <p>Favourited by <%= project.favourites.count%> people</p>
+<% end %>

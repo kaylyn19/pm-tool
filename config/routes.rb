@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   get '/', {to: 'home#index', as: 'root'}
   get '/about', {to: 'home#about'}
+  get '/my_favourites', {to: 'home#favourites', as: 'my_favourites'}
 
   resources :projects
 
@@ -28,4 +29,7 @@ Rails.application.routes.draw do
   resources :projects do
     resources :favourites, only: [:create, :destroy]
   end
+
+  post 'password/forgot', {to: 'password#forgot', as: :forgot_password}
+  post 'password/reset', {to: 'password#reset', as: :reset_password}
 end
