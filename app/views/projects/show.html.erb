@@ -1,7 +1,7 @@
 <h1><%= @project.title%></h1>
 <p><%= @project.description%></p>
 <p>Due: <%= @project.due_date%></p>
-<small><%= time_ago_in_words(@project.updated_at)%></small>
+<small>Posted by <%= @project.user.full_name%> <%= time_ago_in_words(@project.updated_at)%></small>
 
 <% favourited_user = @project.favourites.find_by(user:current_user) %>
 <% if favourited_user.present? %>
@@ -10,6 +10,12 @@
     <%= link_to "Favourite", project_favourites_path(@project), method: :post%>
 <% end %>
 <small><%= @project.favourites.count%> favourites </small>
+<br/>
+<div>Tags: 
+    <% @project.tags.each do |tag|%>
+        <p class="badge badge-light"><%= link_to tag.name, projects_path(tag: tag.name) %></p> 
+    <% end %>
+</div>
 <br/>
 <%= link_to "Delete", project_path(@project.id), method: :delete, data: {confirm: "Are you sure you want to delete the project?"}%>
 <%= link_to "Edit", edit_project_path(@project) %>

@@ -5,6 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Tagging.delete_all
+Tag.delete_all
+Favourite.delete_all
 Comment.delete_all
 Discussion.delete_all
 Task.delete_all
@@ -22,6 +25,13 @@ User.delete_all
     )
 end
 users = User.all
+
+20.times do
+    Tag.create(
+        name: Faker::Book.genre
+    )
+end
+tags = Tag.all
 
 10.times do
     datetime = Faker::Date.backward(365 * 5)
@@ -60,6 +70,8 @@ users = User.all
                 end
             end
         end
+        p.favourited_users = users.shuffle.slice(0,rand(users.count))
+        p.tags = tags.shuffle.slice(0,rand(tags.count/2))
     end
 end
 
@@ -67,4 +79,5 @@ p "#{Project.all.count} projects are generated"
 p "#{Task.all.count} tasks are generated"
 p "#{Discussion.all.count} discussions are generated"
 p "#{Comment.all.count} comments are generated"
-p "#{User.all.count} user are generated"
+p "#{User.all.count} users are generated"
+p "#{Tag.all.count} tags are generated"

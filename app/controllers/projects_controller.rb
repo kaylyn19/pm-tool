@@ -8,7 +8,6 @@ class ProjectsController < ApplicationController
     end
 
     def create
-        project_params = params.require(:project).permit(:title, :description, :due_date)
         @project = Project.new project_params
         @project.user = current_user
 
@@ -28,7 +27,12 @@ class ProjectsController < ApplicationController
     end
 
     def index
-        @project = Project.all.order(created_at: :desc)
+        if params[:tag]
+            @tag = Tag.find_or_initialize_by(name: params[:tag])
+            @project = @tag.projects.order(created_at: :desc)
+        else
+            @project = Project.all.order(created_at: :desc)
+        end
     end
 
     def destroy
@@ -42,7 +46,6 @@ class ProjectsController < ApplicationController
     end
 
     def update
-        project_params = params.require(:project).permit(:title, :description, :due_date)
         # @project = Project.find params[:id]
         if @project.update project_params
             redirect_to project_path(@project), notice: 'updated!'
@@ -52,6 +55,10 @@ class ProjectsController < ApplicationController
     end
 
     private
+    
+    def project_params 
+        params.require(:project).permit(:title, :description, :due_date, :tag_name)
+    end
 
     def find_id
         @project = Project.find params[:id]

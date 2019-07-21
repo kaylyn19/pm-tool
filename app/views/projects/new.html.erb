@@ -1,25 +1,3 @@
 <h1>Create a new a project</h1>
 
-<% if @project.errors.any? %>
-    <ul>
-        <% @project.errors.full_messages.each do |msg| %>
-            <li><%= msg %><li>
-        <% end %>
-    </ul>
-<% end %>
-
-<%= form_with model: @project, local:true do |form| %>
-    <div>
-        <%= form.label :title%>
-        <%= form.text_field :title, placeholder: "title" %>
-    </div>
-    <div>
-        <%= form.label :description%>
-        <%= form.text_field :description, placeholder:"what is the project about?"%>
-    </div>
-    <div>
-        <%= form.label :due_date%>
-        <%= form.text_field :due_date, placeholder: "2019-07-04"%>
-    </div>
-    <%= form.submit%>
-<% end %>
+<%= render "form"%>
